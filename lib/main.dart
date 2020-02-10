@@ -20,8 +20,11 @@ class _MyAppState extends State<MyApp> {
   _login() async{
     try{
       await _googleSignIn.signIn();
+      print('photo :');
+      print(_googleSignIn.currentUser.photoUrl);
       setState(() {
         _isLoggedIn = true;
+
       });
     } catch (err){
       print(err);
@@ -45,8 +48,11 @@ class _MyAppState extends State<MyApp> {
                 ? Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Image.network(_googleSignIn.currentUser.photoUrl, height: 50.0, width: 50.0,),
+                _googleSignIn.currentUser.photoUrl != null ? Image.network(_googleSignIn.currentUser.photoUrl, height: 50.0, width: 50.0,) : Image.asset('assets/image/login.png',height: 80,width: 130,),
                 Text(_googleSignIn.currentUser.displayName),
+                Text(_googleSignIn.currentUser.id),
+                Text(_googleSignIn.currentUser.email),
+
                 OutlineButton( child: Text("Logout"), onPressed: (){
                   _logout();
                 },)
